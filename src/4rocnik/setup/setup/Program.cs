@@ -68,8 +68,14 @@ namespace setup
             */
             
             // KALKULACKA
-            Console.Write("Napiš příklad: ");
-            string mathProblem = Console.ReadLine();
+        }
+        
+    }
+
+    public class Calculator
+    {
+        public string Solve(string mathProblem)
+        {
             mathProblem.Replace(".", ",");
             
             string[] splitProblem = Regex.Split(mathProblem, @"\s+");
@@ -77,6 +83,11 @@ namespace setup
             
             double firstNumber = Double.Parse(splitProblem[0].Replace(".", ","));
             double secondNumber = Double.Parse(splitProblem[2].Replace(".", ","));
+
+            if (secondNumber == 0)
+            {
+                return "You cant divide by zero";
+            }
             
             switch (splitProblem[1])
             {
@@ -99,8 +110,8 @@ namespace setup
                     Console.WriteLine("Wrong user input!");
                     break;
             }
-            
-            Console.WriteLine($"{splitProblem[0]} {splitProblem[1]} {splitProblem[2]} = {finished}");
+
+            return $"{splitProblem[0]} {splitProblem[1]} {splitProblem[2]} = {finished}";
         }
     }
 }
