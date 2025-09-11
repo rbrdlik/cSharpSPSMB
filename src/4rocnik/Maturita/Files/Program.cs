@@ -8,7 +8,7 @@ namespace Files
   {
     public static void Main(string[] args)
     {
-      string line;
+      string line; 
       string[] row = new string[8];
       List<Movie> movies = new List<Movie>();
       StreamReader sr = new StreamReader("C:\\Users\\roman.brdlik\\Desktop\\cSharpSPSMB\\src\\4rocnik\\Maturita\\Files\\movies.csv");
