@@ -5,7 +5,7 @@ namespace OopExamples.implementations;
 
 public class Computer : IComputer
 {
-    public  IEntity Owner { get; init; }
+    public  IEntity Owner { get; set; }
     public IMotherBoard MotherBoard { get; init; }
     public ICPU Cpu { get; init; }
     public IGPU Gpu { get; init; }
@@ -89,6 +89,16 @@ public class Computer : IComputer
         }
 
         return (float)finished;
+    }
+
+    public void ChangeOwner(IEntity? newOwner)
+    {
+         Owner = newOwner;
+    }
+
+    public void RemoveOwner()
+    {
+        Owner = null;
     }
 
     public IComputer BuildNewComputer(IComputerConfiguration configuration)
