@@ -12,6 +12,7 @@ public class Computer : IComputer
     public IRAM Ram { get; init; }
     public IPowerSupply PowerSupply { get; init; }
     public ICase Case { get; init; }
+    public IMonitor[] Monitors { get; init; }
     public bool IsOn { get; set; }
     public bool IsPersonalPC { get; }
     public bool IsCompanyPC { get; }
@@ -54,11 +55,6 @@ public class Computer : IComputer
             
         double firstNumber = Double.Parse(splitProblem[0].Replace(".", ","));
         double secondNumber = Double.Parse(splitProblem[2].Replace(".", ","));
-
-        if (secondNumber == 0)
-        {
-            return 0;
-        }
             
         switch (splitProblem[1])
         {

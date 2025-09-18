@@ -38,4 +38,9 @@ public class ComputerBuilder : IComputerBuilder
     {
         throw new NotImplementedException();
     }
+
+    public IComputer Build()
+    {
+        throw new NotImplementedException();
+    }
 }
