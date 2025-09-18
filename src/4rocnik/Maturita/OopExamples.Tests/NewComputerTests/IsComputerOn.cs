@@ -5,8 +5,15 @@ namespace OopExamples.Tests;
 
 public class IsComputerOn
 {
-    private readonly IComputer _computer = new Computer(new MotherBoard("MotherBoard"), new CPU("CPU"), new GPU("GPU", [GPUConnector.AVG, GPUConnector.DVI, GPUConnector.HDMI]), new RAM("RAM"), new PowerSupply("PowerSupply"), new Case("Case"));
-
+    private readonly IComputer _computer = new ComputerBuilder()
+        .AddMotherBoard(new MotherBoard("MotherBoard"))
+        .AddCPU(new CPU("CPU"))
+        .AddGPU(new GPU("GPU", new[] { GPUConnector.AVG, GPUConnector.DVI, GPUConnector.HDMI }))
+        .AddRam(new RAM("RAM"))
+        .AddPowerSupply(new PowerSupply("PowerSupply"))
+        .AddCase(new Case("Case"))
+        .Build();
+    
     public IsComputerOn()
     {
         // Do not touch this
