@@ -16,7 +16,17 @@ public class Computer : IComputer
     public bool IsOn { get; set; }
     public bool IsPersonalPC { get; }
     public bool IsCompanyPC { get; }
-    
+
+    public Computer(IMotherBoard motherBoard, ICPU cpu, IGPU gpu, IRAM ram, IPowerSupply powerSupply, ICase @case)
+    {
+        MotherBoard = motherBoard;
+        Cpu = cpu;
+        Gpu = gpu;
+        Ram = ram;
+        PowerSupply = powerSupply;
+        Case = @case;
+    }
+
     public void PowerUp()
     {
         IsOn = true;
@@ -83,14 +93,7 @@ public class Computer : IComputer
 
     public IComputer BuildNewComputer(IComputerConfiguration configuration)
     {
-        return new Computer
-        {
-            MotherBoard = configuration.MotherBoard,
-            Cpu = configuration.Cpu,
-            Gpu = configuration.Gpu,
-            Ram = configuration.Ram,
-            PowerSupply = configuration.PowerSupply,
-            Case = configuration.Case,
-        };
+        return new Computer(configuration.MotherBoard, configuration.Cpu, configuration.Gpu, configuration.Ram,
+            configuration.PowerSupply, configuration.Case);
     }
 }
