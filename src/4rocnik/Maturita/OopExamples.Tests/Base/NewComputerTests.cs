@@ -25,33 +25,38 @@ public class NewComputerTests
         GPUConnector.HDMI
     ];
 
-    private new Dictionary<string, object> InitProperties => new(
-        InitProperties)
+    private new Dictionary<string, object> InitProperties => new()
     {
         { "Name", "test name" },
     };
 
     public NewComputerTests()
     {
-        // tests
-        // Create instance of interfaces, using your implementation
-        ComputerConfiguration = new ComputerConfiguration(new MotherBoard("Motherboard"), new CPU("CPU"), new GPU("GPU", new []{GPUConnector.AVG, GPUConnector.HDMI}), new RAM("RAM"), new PowerSupply("PowerSupply"), new Case("Case"));
-        Builder = new ComputerBuilder();
-        Computer = Builder
-            .AddMotherBoard(ComputerConfiguration.MotherBoard)
-            .AddCPU(ComputerConfiguration.Cpu)
-            .AddGPU(ComputerConfiguration.Gpu)
-            .AddRam(ComputerConfiguration.Ram)
-            .AddPowerSupply(ComputerConfiguration.PowerSupply)
-            .AddCase(ComputerConfiguration.Case)
-            .Build();
-        Person = new  Person();
-        Company = new Company();
-        Monitors = MonitorConnectors.Select<GPUConnector, IMonitor>(connector =>
-            // new Monitor("name", connector)
-            new Monitor
-            
-        );
+        ComputerConfiguration = InstantiateImplementation<IComputerConfiguration>(
+            InitProperties
+                .AddProperty(nameof(ComputerConfiguration.MotherBoard), 
+                    InstantiateImplementation<IMotherBoard>(InitProperties))
+                .AddProperty(nameof(ComputerConfiguration.Cpu), 
+                    InstantiateImplementation<ICPU>(InitProperties))
+                .AddProperty(nameof(ComputerConfiguration.Gpu), 
+                    InstantiateImplementation<IGPU>(InitProperties))
+                .AddProperty(nameof(ComputerConfiguration.Ram), 
+                    InstantiateImplementation<IRAM>(InitProperties))
+                .AddProperty(nameof(ComputerConfiguration.PowerSupply), 
+                    InstantiateImplementation<IPowerSupply>(InitProperties))
+                .AddProperty(nameof(ComputerConfiguration.Case), 
+                    InstantiateImplementation<ICase>(InitProperties))
+            );
+        
+        Builder = InstantiateImplementation<IComputerBuilder>(
+            InitProperties);
+        Computer = Builder.BuildFromConfiguration(ComputerConfiguration);
+        Person = InstantiateImplementation<IPerson>(
+            InitProperties);
+        Company = InstantiateImplementation<ICompany>(
+            InitProperties
+                .AddProperty(nameof(ICompany.Owner), "Test owner")
+            );
 
         // For Monitors, create one instance per connector
         Monitors = MonitorConnectors.Select(connector =>
@@ -73,7 +78,7 @@ public class NewComputerTests
         Assert.NotNull(Monitors);
 
         Assert.NotEmpty(Monitors);
-        Assert.Equal(MonitorConnectors.Count(), Monitors.Count());
+        Assert.Equal(MonitorConnectors.Count, Monitors.Count());
         Assert.All(Monitors, monitor =>
             Assert.Contains(monitor.Connector, MonitorConnectors));
     }
