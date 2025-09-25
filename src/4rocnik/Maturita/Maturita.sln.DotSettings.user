@@ -8,6 +8,6 @@
     &lt;TestId&gt;xUnit::5E08BD69-82A0-417D-B1C5-A17E53038683::net9.0::OopExamples.Tests.BuildNewComputer&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::5E08BD69-82A0-417D-B1C5-A17E53038683::net9.0::OopExamples.Tests.Compute&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::5E08BD69-82A0-417D-B1C5-A17E53038683::net9.0::OopExamples.Tests.ValidComputer&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::5E08BD69-82A0-417D-B1C5-A17E53038683::net9.0::OopExamples.Tests.NewComputerTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::5E08BD69-82A0-417D-B1C5-A17E53038683::net9.0::OopExamples.Tests.NewComputerTests.IsValidSetup&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

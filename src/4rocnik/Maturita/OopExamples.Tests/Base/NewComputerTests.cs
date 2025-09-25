@@ -1,10 +1,9 @@
-using System.Diagnostics;
 using System.Reflection;
 using OopExamples.Implemantations;
 using OopExamples.implementations;
 using OopExamples.Interfaces;
 using OopExamples.Tests.Extensions;
-using Monitor = System.Threading.Monitor;
+using Monitor = OopExamples.implementations.Monitor;
 
 namespace OopExamples.Tests;
 
@@ -32,39 +31,23 @@ public class NewComputerTests
 
     public NewComputerTests()
     {
-        ComputerConfiguration = InstantiateImplementation<IComputerConfiguration>(
-            InitProperties
-                .AddProperty(nameof(ComputerConfiguration.MotherBoard), 
-                    InstantiateImplementation<IMotherBoard>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Cpu), 
-                    InstantiateImplementation<ICPU>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Gpu), 
-                    InstantiateImplementation<IGPU>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Ram), 
-                    InstantiateImplementation<IRAM>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.PowerSupply), 
-                    InstantiateImplementation<IPowerSupply>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Case), 
-                    InstantiateImplementation<ICase>(InitProperties))
-            );
-        
-        Builder = InstantiateImplementation<IComputerBuilder>(
-            InitProperties);
-        Computer = Builder.BuildFromConfiguration(ComputerConfiguration);
-        Person = InstantiateImplementation<IPerson>(
-            InitProperties);
-        Company = InstantiateImplementation<ICompany>(
-            InitProperties
-                .AddProperty(nameof(ICompany.Owner), "Test owner")
-            );
+        // tests
+        // Create instance of interfaces, using your implementation
+        ComputerConfiguration = new ComputerConfiguration(new MotherBoard("Motherboard"), new CPU("CPU"), new GPU("GPU", new []{GPUConnector.AVG, GPUConnector.HDMI}), new RAM("RAM"), new PowerSupply("PowerSupply"), new Case("Case"));
+        Builder = new ComputerBuilder();
+        Computer = new Computer();
+        Person = new  Person();
+        Company = new Company();
+        Monitors = MonitorConnectors.Select<GPUConnector, IMonitor>(connector =>
+            // new Monitor("name", connector)
+            new Monitor("AOC", GPUConnector.AVG)
+        );
 
         // For Monitors, create one instance per connector
         Monitors = MonitorConnectors.Select(connector =>
-            InstantiateImplementation<IMonitor>(
-                InitProperties
-                    .AddProperty(nameof(IMonitor.Connector), connector)
-            )
+            new Monitor($"Monitor-{connector}", connector)
         ).ToList();
+
     }
 
     [Fact]
