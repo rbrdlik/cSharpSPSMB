@@ -1,4 +1,4 @@
-﻿using OopExamples.implementations;
+using OopExamples.implementations;
 using OopExamples.Interfaces;
 
 namespace OopExamples.Implemantations;
