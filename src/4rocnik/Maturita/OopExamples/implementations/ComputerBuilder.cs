@@ -1,46 +1,77 @@
-﻿using OopExamples.Interfaces;
+﻿using OopExamples.implementations;
+using OopExamples.Interfaces;
 
-namespace OopExamples.implementations;
+namespace OopExamples.Implemantations;
 
 public class ComputerBuilder : IComputerBuilder
 {
-    public IComputer BuildFromConfiguration(IComputerConfiguration configuration)
-    {
-        throw new NotImplementedException();
-    }
+    private IMotherBoard _motherBoard;
+    private ICPU _cpu;
+    private IGPU _gpu;
+    private IRAM _ram;
+    private IPowerSupply _powerSupply;
+    private ICase _case;
 
     public IComputerBuilder AddMotherBoard(IMotherBoard motherBoard)
     {
-        throw new NotImplementedException();
+        _motherBoard = motherBoard;
+        return this;
     }
 
     public IComputerBuilder AddCPU(ICPU cpu)
     {
-        throw new NotImplementedException();
+        _cpu = cpu;
+        return this;
     }
 
     public IComputerBuilder AddGPU(IGPU gpu)
     {
-        throw new NotImplementedException();
+        _gpu = gpu;
+        return this;
     }
 
     public IComputerBuilder AddRam(IRAM ram)
     {
-        throw new NotImplementedException();
+        _ram = ram;
+        return this;
     }
 
     public IComputerBuilder AddPowerSupply(IPowerSupply powerSupply)
     {
-        throw new NotImplementedException();
+        _powerSupply = powerSupply;
+        return this;
     }
 
     public IComputerBuilder AddCase(ICase pcCase)
     {
-        throw new NotImplementedException();
+        _case = pcCase;
+        return this;
     }
 
     public IComputer Build()
     {
-        throw new NotImplementedException();
+        return new Computer
+        {
+            MotherBoard = _motherBoard,
+            Cpu = _cpu,
+            Gpu = _gpu, 
+            Ram = _ram,
+            PowerSupply = _powerSupply,
+            Case = _case,
+            IsOn = false
+        };
     }
+
+    public IComputer BuildFromConfiguration(IComputerConfiguration configuration)
+    {
+        return this
+            .AddMotherBoard(configuration.MotherBoard)
+            .AddCPU(configuration.Cpu)
+            .AddGPU(configuration.Gpu)
+            .AddRam(configuration.Ram)
+            .AddPowerSupply(configuration.PowerSupply)
+            .AddCase(configuration.Case)
+            .Build();
+    }
+
 }
