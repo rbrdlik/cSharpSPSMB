@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using OopExamples.Interfaces;
+using OopExamples.Interfaces.Exceptions;
 
 namespace OopExamples.implementations;
 
@@ -49,35 +50,35 @@ public class Computer : IComputer
     public float Compute(string equation)
     {
         equation.Replace(".", ",");
-            
-        string[] splitProblem = Regex.Split(equation, @"\s+");
+
+        string[] splitProblem = Regex.Split(equation, @"\s+")
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .ToArray();
         double finished = 0;
-            
+
         double firstNumber = Double.Parse(splitProblem[0].Replace(".", ","));
         double secondNumber = Double.Parse(splitProblem[2].Replace(".", ","));
-            
+
         switch (splitProblem[1])
         {
-            case "+":
-                finished = firstNumber +  secondNumber; 
+            case "+": 
+                finished = firstNumber + secondNumber; 
                 break;
-            case "-":
-                finished = firstNumber - secondNumber;
+            case "-": 
+                finished = firstNumber - secondNumber; 
                 break;
-            case "*":
-                finished = firstNumber * secondNumber;
+            case "*": 
+                finished = firstNumber * secondNumber; 
                 break;
-            case "/":
-                finished = firstNumber / secondNumber;
+            case "/": 
+                finished = firstNumber / secondNumber; 
                 break;
-            case "**":
-                finished = Math.Pow(firstNumber, secondNumber);
+            case "**": 
+                finished = Math.Pow(firstNumber, secondNumber); 
                 break;
             default: 
-                Console.WriteLine("Wrong user input!");
-                break;
+                throw new InvalidEquationException();
         }
-
         return (float)finished;
     }
 

@@ -1,4 +1,7 @@
+using OopExamples.Implemantations;
+using OopExamples.implementations;
 using OopExamples.Interfaces;
+using Monitor = OopExamples.implementations.Monitor;
 
 namespace OopExamples.Tests;
 
@@ -14,7 +17,6 @@ public class NewComputerTests
     private readonly List<GPUConnector> MonitorConnectors = new List<GPUConnector>()
     {
         GPUConnector.AVG,
-        GPUConnector.AVG,
         GPUConnector.DVI,
         GPUConnector.HDMI,
     };
@@ -23,20 +25,21 @@ public class NewComputerTests
     {
         // tests
         // Create instance of interfaces, using your implementation
-        ComputerConfiguration = new ComputerConfiguration();
+        ComputerConfiguration = new ComputerConfiguration(new MotherBoard("Motherboard"), new CPU("CPU"), new GPU("GPU", new []{GPUConnector.AVG, GPUConnector.HDMI}), new RAM("RAM"), new PowerSupply("PowerSupply"), new Case("Case"));
         Builder = new ComputerBuilder();
-        Computer = new  Computer();
+        Computer = Builder
+            .AddMotherBoard(ComputerConfiguration.MotherBoard)
+            .AddCPU(ComputerConfiguration.Cpu)
+            .AddGPU(ComputerConfiguration.Gpu)
+            .AddRam(ComputerConfiguration.Ram)
+            .AddPowerSupply(ComputerConfiguration.PowerSupply)
+            .AddCase(ComputerConfiguration.Case)
+            .Build();
         Person = new  Person();
         Company = new Company();
-        
-        ComputerConfiguration = null;
-        Builder = null;
-        Computer = null;
-        Person = null;
-        Company = null;
         Monitors = MonitorConnectors.Select<GPUConnector, IMonitor>(connector =>
             // new Monitor("name", connector)
-            (IMonitor)null
+            new Monitor("AOC", GPUConnector.HDMI)
         );
 
         // Do not touch this
