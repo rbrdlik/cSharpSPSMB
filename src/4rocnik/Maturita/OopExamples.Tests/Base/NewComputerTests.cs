@@ -1,4 +1,10 @@
+using System.Diagnostics;
+using System.Reflection;
+using OopExamples.Implemantations;
+using OopExamples.implementations;
 using OopExamples.Interfaces;
+using OopExamples.Tests.Extensions;
+using Monitor = System.Threading.Monitor;
 
 namespace OopExamples.Tests;
 
@@ -43,33 +49,9 @@ public class NewComputerTests
         Company = new Company();
         Monitors = MonitorConnectors.Select<GPUConnector, IMonitor>(connector =>
             // new Monitor("name", connector)
-            new Monitor("AOC", GPUConnector.HDMI)
+            new Monitor
+            
         );
-        ComputerConfiguration = InstantiateImplementation<IComputerConfiguration>(
-            InitProperties
-                .AddProperty(nameof(ComputerConfiguration.MotherBoard), 
-                    InstantiateImplementation<IMotherBoard>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Cpu), 
-                    InstantiateImplementation<ICPU>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Gpu), 
-                    InstantiateImplementation<IGPU>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Ram), 
-                    InstantiateImplementation<IRAM>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.PowerSupply), 
-                    InstantiateImplementation<IPowerSupply>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Case), 
-                    InstantiateImplementation<ICase>(InitProperties))
-            );
-        
-        Builder = InstantiateImplementation<IComputerBuilder>(
-            InitProperties);
-        Computer = Builder.BuildFromConfiguration(ComputerConfiguration);
-        Person = InstantiateImplementation<IPerson>(
-            InitProperties);
-        Company = InstantiateImplementation<ICompany>(
-            InitProperties
-                .AddProperty(nameof(ICompany.Owner), "Test owner")
-            );
 
         // For Monitors, create one instance per connector
         Monitors = MonitorConnectors.Select(connector =>
