@@ -1,9 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 
+using OopExamples.Implemantations;
 using OopExamples.Interfaces;
 
-IComputerBuilder builder;
+IComputerBuilder builder = new ComputerBuilder();
 
 var computer = builder
     .AddCase(null)

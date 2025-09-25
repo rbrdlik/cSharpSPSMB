@@ -15,11 +15,11 @@ public class NewComputerTests
     public NewComputerTests()
     {
         // Create instance of interfaces, using your implementation
-        ComputerConfiguration = null;
-        Builder = null;
-        Computer = null;
-        Person = null;
-        Company = null;
+        ComputerConfiguration = new ComputerConfiguration();
+        Builder = new ComputerBuilder();
+        Computer = new  Computer();
+        Person = new  Person();
+        Company = new Company();
         
         // Do not touch this
         Computer = Computer ?? throw new System.NotImplementedException($"{nameof(Computer)} not implemented");
