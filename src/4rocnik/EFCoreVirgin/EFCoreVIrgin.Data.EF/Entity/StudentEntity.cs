@@ -10,6 +10,7 @@ public class StudentEntity
     public string Name { get; set; }
     
     public ProfileEntity Profile { get; set; }
+    public ClassEntity Class { get; set; }
 
     public override string ToString()
     {
